@@ -12,3 +12,6 @@
     - Updated to Materialize v0.97.5
 1.0.5:
     - Updated to Materialize v0.97.6
+1.1.0:
+    - Added Gulp-based SASS / ES6 build
+    - Removed obsolete /font assets
