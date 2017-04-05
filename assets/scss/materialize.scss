@@ -5,19 +5,24 @@
 @import "components/mixins";
 @import "components/color";
 
-// Variables;
-@import "variables";
+// Variables
+@import "components/variables";
+// overrides
+$primary-color: color("materialize-red", "lighten-2");
+$secondary-color: color("teal", "lighten-1");
 
 // Reset
 @import "components/normalize";
 
 // components
 @import "components/global";
+@import "components/badges";
 @import "components/icons-material-design";
 @import "components/grid";
 @import "components/navbar";
 @import "components/roboto";
 @import "components/typography";
+@import "components/transitions";
 @import "components/cards";
 @import "components/toast";
 @import "components/tabs";
@@ -35,6 +40,8 @@
 @import "components/preloader";
 @import "components/slider";
 @import "components/carousel";
+@import "components/tapTarget";
+@import "components/pulse";
 @import "components/date_picker/default";
 @import "components/date_picker/default.date";
 @import "components/date_picker/default.time";
