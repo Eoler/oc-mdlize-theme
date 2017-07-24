@@ -3,7 +3,7 @@ A blank theme for [OctoberCMS](https://octobercms.com/) with [Materialize](http:
 
 
 ## Installation
-`$ php artisan theme:install martin.blank-materialize <theme>`
+`$ php artisan theme:install eoler.mdlize <theme>`
 
 Replace `<theme>` with the name of your theme.
 
@@ -25,16 +25,15 @@ Development changes can be automated with command-line instruction inside *theme
 ```
 gulp watch
 ```
-Build optimized, minified, autoprefixed assets with command-line instruction inside *theme root*:
+Build optimized, minified, versioned autoprefixed assets with command-line instruction inside *theme root*:
 ```
-gulp --production
+gulp [upbuild] --production
 ```
 
 ## One-time Development Environment Setup
-Install [NodeJS and Node Package Manager](https://nodejs.org/en/) globally (Stable version preferred).
+Install [NodeJS and Node Package Manager](https://nodejs.org/en/) globally (LTS version required).
 Run the following command-line instructions inside *theme root*:
 ```
 npm install --global gulp bower
-npm install && bower install
+npm install
 ```
-

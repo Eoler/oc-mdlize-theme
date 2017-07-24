@@ -1,5 +1,7 @@
 name: 'Blank Materialize'
 description: 'A blank theme with Materialize framework & jQuery.'
-author: 'Martin M.'
-homepage: 'https://github.com/skydiver/october-theme-blank-materialize'
+author: Eoler
+homepage: 'https://github.com/Eoler/oc-mdlize-theme'
 code: MDlize
+
+form: fields.yaml

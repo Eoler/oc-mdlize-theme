@@ -7,16 +7,16 @@ description = "Default layout"
     <title>{{ this.page.title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="{{ 'assets/css/materialize.min.css'|theme }}" rel="stylesheet">
+    <link href="{{ 'assets/css/materialize.min.css'|theme }}?v={{ this.theme.version }}" rel="stylesheet">
     {% styles %}
 </head>
 <body>
     {% page %}
     <script src="{{ [
-        'assets/js/jquery-2.2.4.min.js',
+        'assets/js/jquery-3.2.1.min.js',
         'assets/js/materialize.min.js',
         '@framework',
-        '@framework.extras']|theme }}"></script>
+        '@framework.extras']|theme }}?v={{ this.theme.version }}"></script>
     {% scripts %}
 </body>
 </html>

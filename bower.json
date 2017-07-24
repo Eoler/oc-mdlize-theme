@@ -1,20 +1,21 @@
 {
-    "private": true,
-    "name": "oc-mdlize-theme",
-    "version": "1.1.1",
-    "description": "A blank theme with Materialize framework & jQuery.",
-    "authors": [
-        "Martin M.",
-        "Danilo Cuculic <eoler@castus.me>"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "materialize": "0.98.1"
-    }
+  "private": true,
+  "name": "oc-mdlize-theme",
+  "version": "1.2.0",
+  "description": "A blank theme with Materialize framework & jQuery.",
+  "authors": [
+    "Martin M.",
+    "Danilo Cuculic <eoler@castus.me>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "3.2.1",
+    "materialize": "0.99.0"
+  }
 }

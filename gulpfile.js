@@ -8,6 +8,8 @@
  * Usage (GulpJS):
  * > gulp styles  [--production][--src=<filepath/filename.scss> [--dest=<path/dirname>]]
  * > gulp scripts [--production][--src=<filepath/filename.js> [--dest=<path/dirname>]]
+ * > gulp upbuild [--production]
+ * > gulp watch
  */
 'use strict';
 var // defaults
@@ -48,19 +50,19 @@ var sourcemaps = require('gulp-sourcemaps'),
     autoprefixer( {
         cascade: false,
         //map: true,
-        browsers: ["last 2 versions", "iOS >= 7"] } ),
+        browsers: ["last 2 versions", "Safari >= 8", "iOS >= 8"] } ),
     sourcemaps.write( "./", {
         includeContent: false,
         sourceRoot: "../scss" } ),
     gulp.dest( destdir ),
     gulpif(args.production, rename( { suffix: ".min" } ) ),
-    gulpif(args.production, cleancss( ) ),
+    gulpif(args.production, cleancss() ),
     gulpif(args.production, gulp.dest( destdir ) )
   ], cb);
 });
 
 gulp.task('scripts', function(cb){
-var include = require('gulp-include'), // extend Javascript files with Sprockets syntax
+var include = require('gulp-include'), // extend source files with Sprockets syntax
     uglify = require('gulp-uglify'),
     srcfiles = args.src || defscripts_srcglb,
     destdir = args.dest || defscripts_destdir;
@@ -68,9 +70,20 @@ var include = require('gulp-include'), // extend Javascript files with Sprockets
     include(),
     gulp.dest( destdir ),
     gulpif(args.production, rename( function(fullname){ fullname.extname = ".min.js"; } ) ),
-    gulpif(args.production, uglify( { preserveComments: "license" } ) ),
+    gulpif(args.production, uglify( { output: { comments: "/^!/" } } ) ),
     gulpif(args.production, gulp.dest( destdir ) )
   ], cb);
+});
+
+gulp.task('upbuild', ['styles', 'scripts'], function(cb){
+var fs = require('fs'),
+    yaml = require('js-yaml'),
+    srcfile = args.src || defassets_destdir+"../fields.yaml";
+  if (fs.existsSync(srcfile)) {
+    var obyaml = yaml.safeLoad( fs.readFileSync( srcfile, "utf8" ), { json: true } );
+    obyaml.fields.version.default++;
+    fs.writeFileSync( srcfile, yaml.dump( obyaml, { indent: 4 } ) );
+  }
 });
 
 gulp.task('watch', function(){

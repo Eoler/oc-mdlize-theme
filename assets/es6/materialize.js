@@ -1,6 +1,6 @@
-//github.com/Dogfalo/materialize/blob/master/Gruntfile.js#L128
+//github.com/Dogfalo/materialize/blob/master/Gruntfile.js#L150
 //= require ../vendor/materialize/js/initial.js
-//= require ../vendor/materialize/js/jquery.easing.1.3.js
+//= require ../vendor/materialize/js/jquery.easing.1.4.js
 //= require ../vendor/materialize/js/animation.js
 //= require ../vendor/materialize/js/velocity.min.js
 //= require ../vendor/materialize/js/hammer.min.js
@@ -27,6 +27,7 @@
 //= require ../vendor/materialize/js/scrollFire.js
 //= require ../vendor/materialize/js/date_picker/picker.js
 //= require ../vendor/materialize/js/date_picker/picker.date.js
+//= require ../vendor/materialize/js/date_picker/picker.time.js
 //= require ../vendor/materialize/js/character_counter.js
 //= require ../vendor/materialize/js/carousel.js
 //= require ../vendor/materialize/js/tapTarget.js
