@@ -1,4 +1,5 @@
 //github.com/Dogfalo/materialize/blob/master/Gruntfile.js#L150
+
 //= require ../vendor/materialize/js/initial.js
 //= require ../vendor/materialize/js/jquery.easing.1.4.js
 //= require ../vendor/materialize/js/animation.js

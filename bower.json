@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "oc-mdlize-theme",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A blank theme with Materialize framework & jQuery.",
   "authors": [
     "Martin M.",
@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "3.2.1",
+    "jquery": "3.3.1",
     "materialize": "0.99.0"
   }
 }

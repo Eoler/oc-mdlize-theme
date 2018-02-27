@@ -25,7 +25,7 @@ Development changes can be automated with command-line instruction inside *theme
 ```
 gulp watch
 ```
-Build optimized, minified, versioned autoprefixed assets with command-line instruction inside *theme root*:
+Build optimized, minified, versioned, autoprefixed assets with command-line instruction inside *theme root*:
 ```
 gulp [upbuild] --production
 ```
@@ -37,3 +37,8 @@ Run the following command-line instructions inside *theme root*:
 npm install --global gulp bower
 npm install
 ```
+Alternative NPM-compatible package manager [Yarn](https://yarnpkg.com/en/) could be used:
+```
+yarn
+```
+

@@ -19,3 +19,5 @@
     - Updated to Materialize v0.98.1
 1.2.0:
     - Updated to Materialize v0.99.0, added asset versioning
+1.2.1:
+    - Refreshed build and frontend assets
