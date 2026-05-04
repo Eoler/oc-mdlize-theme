@@ -1,3 +1,4 @@
+//jshint node: true
 /*
  * Build project assets for development and production
  *
@@ -6,89 +7,85 @@
  * > npm install && bower install
  *
  * Usage (GulpJS):
- * > gulp styles  [--production][--src=<filepath/filename.scss> [--dest=<path/dirname>]]
- * > gulp scripts [--production][--src=<filepath/filename.js> [--dest=<path/dirname>]]
+ * > gulp styles  [--production][--src={filepath/filename.scss} [--dest={path/dirname}]]
+ * > gulp scripts [--production][--src={filepath/filename.js} [--dest={path/dirname}]]
  * > gulp upbuild [--production]
  * > gulp watch
  */
-'use strict';
-var // defaults
-    defassets_srcdir = "assets/",
-    defvendor_srcdir = defassets_srcdir+"vendor/",
-    defstyles_srcdir = defassets_srcdir+"scss/",
-    defstyles_srcglb = defstyles_srcdir+"*.scss",
-    defscripts_srcglb = defassets_srcdir+"es6/*.js",
-    defassets_destdir = defassets_srcdir,
-    defstyles_destdir = defassets_destdir+"css/",
-    defscripts_destdir = defassets_destdir+"js/",
-    // global modules
-    args = require('yargs').argv,
-    pump = require('pump'),
-    gulp = require('gulp'),
-    gulpif = require('gulp-if'),
-    rename = require('gulp-rename');
+"use strict";
+const pkg = require('./package.json');
+const args = require('yargs').argv;
+const gulp = require('gulp');
+const $ = require('gulp-load-plugins')({
+    pattern: ['*'],
+    scope: ['devDependencies']
+});
 
 gulp.task('default', ['styles', 'scripts']);
 
 gulp.task('styles', function(cb){
-var sourcemaps = require('gulp-sourcemaps'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cleancss = require('gulp-clean-css'),
-    ignore = require('gulp-ignore'),
-    srcfiles = args.src || defstyles_srcglb,
-    destdir = args.dest || defstyles_destdir;
-  pump([ gulp.src( srcfiles ),
-    sourcemaps.init(),
-    sass( {
-        errLogToConsole: true,
-        outputStyle: 'nested',
-        //sourceComments: true,
-        sourceMapEmbed: false,
-        includePaths: [
-          defvendor_srcdir+"materialize/sass"
-        ] } ),
-    autoprefixer( {
-        cascade: false,
-        //map: true,
-        browsers: ["last 2 versions", "Safari >= 8", "iOS >= 8"] } ),
-    sourcemaps.write( "./", {
-        includeContent: false,
-        sourceRoot: "../scss" } ),
-    gulp.dest( destdir ),
-    gulpif(args.production, ignore.exclude( "*.map" ) ),
-    gulpif(args.production, rename( { suffix: ".min" } ) ),
-    gulpif(args.production, cleancss() ),
-    gulpif(args.production, gulp.dest( destdir ) )
-  ], cb);
+const
+    srcFiles = args.src || pkg.paths.root + pkg.paths.assets + pkg.paths.src.styles + pkg.paths.ext.styles,
+    destDir = args.dest || pkg.paths.root + pkg.paths.assets + pkg.paths.dest.styles;
+    $.pump([gulp.src(srcFiles),
+        $.sourcemaps.init(),
+        $.sass({
+            errLogToConsole: true,
+            outputStyle: 'nested',
+            //sourceComments: true,
+            sourceMapEmbed: false,
+            includePaths: pkg.paths.include.sass
+        }),
+        $.postcss([ require('autoprefixer')({
+            //map: true,
+            overrideBrowserslist: pkg.browserslist,
+            cascade: false
+        }) ]),
+        $.sourcemaps.write('./', {
+            includeContent: false,
+            sourceRoot: pkg.paths.sourcemap.root
+        }),
+        gulp.dest(destDir),
+        $.if(args.production, $.ignore.exclude('*.map')),
+        $.size({showFiles: true, showTotal: false}),
+        $.if(args.production, $.rename({suffix: '.min'})),
+        $.if(args.production, $.postcss([ require('postcss-csso')({
+             restructure: true
+         }) ])),
+        $.if(args.production, gulp.dest(destDir)),
+        $.if(args.production, $.size({showFiles: true, showTotal: false}))
+    ], cb);
 });
 
 gulp.task('scripts', function(cb){
-var include = require('gulp-include'), // extend source files with Sprockets syntax
-    uglify = require('gulp-uglify'),
-    srcfiles = args.src || defscripts_srcglb,
-    destdir = args.dest || defscripts_destdir;
-  pump([ gulp.src( srcfiles ),
-    include(),
-    gulp.dest( destdir ),
-    gulpif(args.production, rename( function(fullname){ fullname.extname = ".min.js"; } ) ),
-    gulpif(args.production, uglify( { output: { comments: "/^!/" } } ) ),
-    gulpif(args.production, gulp.dest( destdir ) )
-  ], cb);
+const
+    srcFiles = args.src || pkg.paths.root + pkg.paths.assets + pkg.paths.src.scripts + pkg.paths.ext.scripts,
+    destDir = args.dest || pkg.paths.root + pkg.paths.assets + pkg.paths.dest.scripts;
+    $.pump([gulp.src(srcFiles),
+        $.include({hardFail: true, includePaths: [pkg.paths.root + pkg.paths.assets].concat(pkg.paths.include.js)}),
+        gulp.dest(destDir),
+        $.size({showFiles: true, showTotal: false}),
+        $.if(args.production, $.rename(function(fullname){
+            fullname.extname = '.min.js';
+        })),
+        $.if(args.production, $.uglify({output: {comments: '/^!/'}})),
+        $.if(args.production, gulp.dest(destDir)),
+        $.if(args.production, $.size({showFiles: true, showTotal: false}))
+    ], cb);
 });
 
 gulp.task('upbuild', ['styles', 'scripts'], function(cb){
-var fs = require('fs'),
-    yaml = require('js-yaml'),
-    srcfile = args.src || defassets_destdir+"../fields.yaml";
-  if (fs.existsSync(srcfile)) {
-    var obyaml = yaml.safeLoad( fs.readFileSync( srcfile, "utf8" ), { json: true } );
-    obyaml.fields.version.default++;
-    fs.writeFileSync( srcfile, yaml.dump( obyaml, { indent: 4 } ) );
-  }
+const
+    fs = require('fs'),
+    srcFile = args.src || pkg.paths.root + 'fields.yaml';
+    if (fs.existsSync(srcFile)) {
+        let obyaml = $.jsYaml.safeLoad(fs.readFileSync(srcFile, 'utf8'), {json: true});
+        obyaml.fields.version.default++;
+        fs.writeFileSync(srcFile, $.jsYaml.dump(obyaml, {indent: 4}));
+    }
 });
 
 gulp.task('watch', function(){
-    gulp.watch( [defstyles_srcglb], ['styles'] );
-    gulp.watch( [defscripts_srcglb], ['scripts'] );
+    gulp.watch( [pkg.paths.root + pkg.paths.assets + pkg.paths.src.styles + pkg.paths.ext.styles], ['styles'] );
+    gulp.watch( [pkg.paths.root + pkg.paths.assets + pkg.paths.src.scripts + pkg.paths.ext.scripts], ['scripts'] );
 });

@@ -1,0 +1,14 @@
+{
+    "name": "castus/castus-mdlize-theme",
+    "type": "october-theme",
+    "description": "Starter development template for building Materialize themed OctoberCMS sites.",
+    "authors": [
+        {
+            "name": "Danilo Cuculić",
+            "email": "eoler@castus.me"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.0|^2.0"
+    }
+}

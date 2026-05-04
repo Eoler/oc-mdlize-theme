@@ -13,9 +13,8 @@ description = "Default layout"
 <body>
     {% page %}
     <script src="{{ [
-        'assets/js/jquery-3.3.1.min.js',
+        '@jquery',
         'assets/js/materialize.min.js',
-        '@framework',
         '@framework.extras']|theme }}?v={{ this.theme.version }}"></script>
     {% scripts %}
 </body>

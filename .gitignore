@@ -1,7 +1,14 @@
-# develop/debug
-.idea
-*.css.map
+# IDEvelop/debug
+!.gitignore
+.gitattributes
+.editorconfig
+.idea/
+#*.css.map
+
+# build
+composer.lock
+package-lock.json
 
 # 3rd party/vendor
-node_modules/
+/node_modules
 !vendor/
