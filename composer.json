@@ -1,7 +1,8 @@
 {
-    "name": "castus/castus-mdlize-theme",
+    "name": "castus/mdlize-theme",
     "type": "october-theme",
     "description": "Starter development template for building Materialize themed OctoberCMS sites.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Danilo Cuculić",

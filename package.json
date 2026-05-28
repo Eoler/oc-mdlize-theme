@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "autoprefixer": "^10.5.0",
-    "postcss": "^8.5.13",
+    "postcss": "^8.5.15",
     "postcss-csso": "^6.0.1"
   },
   "devDependencies": {

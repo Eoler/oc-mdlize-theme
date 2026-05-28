@@ -1326,7 +1326,7 @@ if (jQuery) {
 
 }( jQuery ));
 
-//= DISABLE vendor/materialize/js/parallax.js
+//=DISABLE vendor/materialize/js/parallax.js
 (function ($) {
 
   var methods = {
